@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://dx0tmhc1xjws0"]
+
+[ext_resource type="PackedScene" uid="uid://cfndg1x76us7l" path="res://scenes/player.tscn" id="1_jpd5o"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1ppv0"]
+sky_top_color = Color(0.337255, 0.403922, 0.494118, 1)
+sky_horizon_color = Color(0.443137, 0.560784, 0.607843, 1)
+sky_curve = 0.0832177
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.427451, 0.482353, 0.596078, 1)
+
+[sub_resource type="Sky" id="Sky_hklmt"]
+sky_material = SubResource("ProceduralSkyMaterial_1ppv0")
+
+[sub_resource type="Environment" id="Environment_tt5wd"]
+background_mode = 2
+sky = SubResource("Sky_hklmt")
+ambient_light_source = 3
+ambient_light_color = Color(0.615686, 0.615686, 0.615686, 1)
+tonemap_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_qy7o5"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rvrg8"]
+albedo_color = Color(0.203922, 0.188235, 0.203922, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3gv5t"]
+size = Vector3(5, 4, 1)
+
+[node name="World" type="Node3D"]
+
+[node name="env" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="env"]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+light_energy = 0.0
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="env"]
+environment = SubResource("Environment_tt5wd")
+
+[node name="entitys" type="Node3D" parent="."]
+
+[node name="Player" parent="entitys" instance=ExtResource("1_jpd5o")]
+
+[node name="scene" type="Node3D" parent="."]
+
+[node name="Flor" type="CSGMesh3D" parent="scene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.55, 0)
+use_collision = true
+mesh = SubResource("BoxMesh_qy7o5")
+material = SubResource("StandardMaterial3D_rvrg8")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="scene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.65379)
+mesh = SubResource("BoxMesh_3gv5t")
+
+[node name="ui" type="Node3D" parent="."]
+
+[node name="LabelHelp" type="Label3D" parent="ui"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.17394, -6.11786)
+text = "Use A W S D To move around
+Shift for Sprint
+C for Crounch"
